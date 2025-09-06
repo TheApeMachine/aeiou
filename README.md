@@ -109,13 +109,16 @@ Type a description like "Add a user authentication function" and press Enter.
 
 ```
 aeiou/
-├── nvim/                    # Neovim plugin
-│   ├── lua/aeiou/          # Plugin Lua modules
-│   └── doc/                # Documentation
+├── lua/                    # Neovim plugin (at root for GitHub installation)
+│   └── aeiou/              # Plugin Lua modules
+├── doc/                    # Neovim documentation
 ├── sidecar/                # Python backend service
 │   ├── app/                # Main application code
 │   ├── tests/              # Test suite
 │   └── requirements.txt    # Python dependencies
+├── nvim/                   # Original Neovim plugin location (for development)
+│   ├── lua/aeiou/          # Plugin Lua modules
+│   └── doc/                # Documentation
 ├── scripts/                # Development scripts
 ├── docs/                   # Additional documentation
 ├── Makefile               # Build automation
@@ -135,6 +138,38 @@ make format         # Auto-format code
 make clean          # Clean build artifacts
 ```
 
+### Installing from GitHub
+
+Add this to your lazy.nvim config:
+
+```lua
+{
+  "TheApeMachine/aeiou",
+  config = function()
+    require('aeiou').setup({
+      sidecar_url = "http://127.0.0.1:8000",
+      auto_start = true
+    })
+  end,
+}
+```
+
+### Development Setup
+
+For local development, use the local path:
+
+```lua
+{
+  dir = "~/path/to/aeiou",  -- Path to your local aeiou directory
+  config = function()
+    require('aeiou').setup({
+      sidecar_url = "http://127.0.0.1:8000",
+      auto_start = true
+    })
+  end,
+}
+```
+
 ### Manual Setup
 
 If you prefer manual setup:
@@ -149,9 +184,12 @@ pip install -r requirements.txt -r requirements-dev.txt
 # Database
 python -c "from app.memory_store import MemoryStore; MemoryStore()"
 
-# Neovim plugin
+# Neovim plugin (symlink method)
 mkdir -p ~/.local/share/nvim/site/pack/aeiou/start
 ln -s $(pwd)/nvim ~/.local/share/nvim/site/pack/aeiou/start/
+
+# Or copy the files
+cp -r nvim/lua/aeiou ~/.local/share/nvim/site/pack/aeiou/start/
 ```
 
 ## 🔧 Configuration
