@@ -1,0 +1,27 @@
+{
+  "naming_conventions": [
+    "functions: snake_case",
+    "classes: PascalCase",
+    "constants: UPPER_CASE"
+  ],
+  "testing_strategy": "pytest; arrange-act-assert; 80% coverage minimum",
+  "style_guides": [
+    "google docstrings",
+    "pep8 line length 88",
+    "black formatter"
+  ],
+  "design_patterns": [
+    "dependency_injection",
+    "pure_functions_first",
+    "explicit error handling"
+  ],
+  "libraries_preferred": [
+    "requests for HTTP",
+    "pydantic for data validation",
+    "fastapi for web APIs"
+  ],
+  "libraries_forbidden": [
+    "avoid eval()",
+    "no bare except clauses"
+  ]
+}

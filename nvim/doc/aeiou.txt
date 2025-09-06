@@ -1,0 +1,213 @@
+*aeiou.txt*  For Neovim version 0.8+    Last change: 2024
+
+==============================================================================
+AEIOU - Collaborative Coding Partner                            *aeiou*
+
+AEIOU is a comprehensive collaborative coding partner that transforms natural
+language prompts into structured code specifications and provides intelligent
+code assistance.
+
+==============================================================================
+CONTENTS                                                      *aeiou-contents*
+
+1. Introduction ................................. |aeiou-intro|
+2. Installation ................................. |aeiou-install|
+3. Configuration ............................... |aeiou-config|
+4. Commands ..................................... |aeiou-commands|
+5. Focus Modes .................................. |aeiou-modes|
+6. Usage Examples ............................... |aeiou-examples|
+7. Troubleshooting .............................. |aeiou-troubleshooting|
+8. API Reference ................................ |aeiou-api|
+
+==============================================================================
+INTRODUCTION                                                  *aeiou-intro*
+
+AEIOU provides the following features:
+
+- Natural language to code specification conversion
+- Real-time code analysis and quality assessment
+- Intelligent task orchestration and breakdown
+- Multiple interaction modes (Pair, Background, Solo Batches)
+- Permission-based tool access control
+- Version control integration with diff narration
+- Persistent memory and learning capabilities
+
+==============================================================================
+INSTALLATION                                                  *aeiou-install*
+
+Using lazy.nvim: ~
+
+    {
+      "theapemachine/aeiou",
+      dir = "~/path/to/aeiou/nvim",
+      config = function()
+        require('aeiou').setup({
+          sidecar_url = "http://127.0.0.1:8000",
+          auto_start = true
+        })
+      end,
+    }
+
+Manual installation: ~
+
+1. Copy nvim/lua/aeiou/ to your Neovim runtime path
+2. Add to your init.lua: >
+
+    require('aeiou').setup({
+      sidecar_url = "http://127.0.0.1:8000",
+      auto_start = true
+    })
+<
+==============================================================================
+CONFIGURATION                                                *aeiou-config*
+
+                                                   *g:aeiou_sidecar_url*
+g:aeiou_sidecar_url         URL of the AEIOU sidecar service
+                           Default: "http://127.0.0.1:8000"
+
+                                                   *g:aeiou_auto_start*
+g:aeiou_auto_start          Auto-start sidecar when plugin loads
+                           Default: true
+
+Example configuration: >
+    require('aeiou').setup({
+      sidecar_url = "http://127.0.0.1:8000",
+      auto_start = true
+    })
+<
+==============================================================================
+COMMANDS                                                      *aeiou-commands*
+
+Core Commands: ~
+
+:AeiouTranscode           Open transcoder window for natural language
+                         to specification conversion
+
+:AeiouGenerateFromPrompt  Generate code from a prompt
+
+:AeiouGenerateOpsFromPrompt
+                         Generate and apply edit operations
+
+:AeiouShowTaskSpec        Display current TaskSpec
+
+:AeiouShowIntentCard      Show next intent card
+
+Mode Management: ~
+
+:AeiouFocusMode {mode}    Set focus mode (pair/background/solo_batches)
+
+:AeiouListModes           List available focus modes
+
+Task Management: ~
+
+:AeiouIntentStats         Show intent card statistics
+
+:AeiouSubtasks            Display active subtasks
+
+Safety & Permissions: ~
+
+:AeiouKillSwitch          Activate emergency kill switch
+
+:AeiouResetSafety         Reset safety counters
+
+Development: ~
+
+:AeiouDigest              Force generate activity digest
+
+:AeiouDigestInterval {seconds}
+                         Set digest interval
+
+==============================================================================
+FOCUS MODES                                                   *aeiou-modes*
+
+AEIOU supports three focus modes:
+
+PAIR MODE ~
+- Narrated small steps with user guidance
+- High interaction frequency
+- Step-by-step confirmation
+- Best for: Learning, complex tasks, safety-critical work
+
+BACKGROUND MODE ~
+- Quiet operation with minimal interruptions
+- Automatic task execution
+- Low interaction frequency
+- Best for: Routine tasks, productivity work
+
+SOLO BATCHES MODE ~
+- Autonomous execution of multiple tasks
+- Batch processing
+- No interruptions
+- Best for: Bulk operations, automated workflows
+
+==============================================================================
+USAGE EXAMPLES                                               *aeiou-examples*
+
+Basic Code Generation: >
+
+    :AeiouTranscode
+    "Add a REST API endpoint for user management"
+    <Enter>
+    :AeiouGenerateFromPrompt
+<
+Task Orchestration: >
+
+    :AeiouShowIntentCard
+    "Do" or "Defer" or "Dismiss" tasks
+    :AeiouIntentStats
+<
+Code Analysis: >
+
+    :AeiouShowTaskSpec
+    :AeiouDigest
+<
+==============================================================================
+TROUBLESHOOTING                                          *aeiou-troubleshooting*
+
+Sidecar Connection Issues: >
+
+    curl http://127.0.0.1:8000/health
+<
+Start sidecar manually: >
+
+    cd sidecar && python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+<
+Permission Issues: >
+
+    :AeiouResetSafety
+    :AeiouKillSwitch
+<
+Mode Issues: >
+
+    :AeiouFocusMode background
+    :AeiouListModes
+<
+==============================================================================
+API REFERENCE                                                  *aeiou-api*
+
+Lua API: ~
+
+require('aeiou').setup({opts})          Setup AEIOU with options
+require('aeiou').get_config()           Get current configuration
+
+require('aeiou.intent_cards').get_current_card()
+                                        Get current intent card
+
+require('aeiou.focus_modes').set_mode(mode)
+                                        Set focus mode
+
+require('aeiou.permissions').check_permission(tool, session)
+                                        Check tool permission
+
+REST API Endpoints: ~
+
+GET  /health                           Health check
+POST /transcode                        Natural language to spec
+POST /generate                         Generate code from spec
+POST /generate_taskspec                Generate TaskSpec from analysis
+POST /check_permission                 Check tool permissions
+POST /apply_edits                      Apply atomic edits
+GET  /diff_narration                   Get narrated diffs
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

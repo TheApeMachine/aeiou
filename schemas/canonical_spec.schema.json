@@ -1,0 +1,96 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/schemas/canonical_spec.schema.json",
+    "title": "Canonical Code Generation Spec",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "goal": {
+            "type": "string",
+            "minLength": 1
+        },
+        "inputs": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "outputs": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "constraints_explicit": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "constraints_inferred": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "libraries_preferred": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "libraries_forbidden": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "style_guides": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "naming_conventions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "design_patterns": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "testing_strategy": {
+            "type": "string"
+        },
+        "edge_cases": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "verbosity": {
+            "type": "string",
+            "enum": [
+                "minimal",
+                "normal",
+                "verbose"
+            ]
+        },
+        "open_questions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "goal",
+        "constraints_explicit",
+        "constraints_inferred",
+        "verbosity"
+    ]
+}
